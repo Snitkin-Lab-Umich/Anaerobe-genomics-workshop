@@ -63,6 +63,30 @@ Applying AMRfinderplus to our outbreak genomes shows that they have many antibio
 
 Downloading public data to put local genomes in context
 -------------------------------------------------------
+Oftentimes it useful to put genomes that you have sequenced in the context of publically available isolates. Example analyses of interest include:
+
+1. Understanding where in the world geneticlly similar strains have been observed, to gain insight into the potential origin of your strians.
+2. Determining whether there are unique characteritics of your strains as compared to what has been observed previously (i.e. novel resistance, virulence, etc.)
+
+In the context of our outbreak investigation, we suspect that it is indeed a clonal outbreak based on all isolates being the same ST. However, we can garner further support by seeing how our isolates compare to public isolates. If our isolates indeed derive from clonal spread in the region, then we expect then to be more closely related to each other, than to isolates we see in public databases. There are several databases that house microbial genomes, including [PATRIC](https://www.bv-brc.org/) and [NCBI](https://www.ncbi.nlm.nih.gov/). Here we will get genomes from NCBI from a previously published paper characterizing the genetic diversity of [ST258](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0133727). When papers with genomic data are published, they are required to submit them to sequence databases. When submitting a genomic dataset to NCBI it is typically associated with a bioproject, which will be indicated in the original manuscript. We can then use this bioproject ID to pull the genomes of itnerest from NCBI.
+
+To get a list of sample IDs associated with this bioproject we will use tools provided by NCBI. In particular, NCBI provides a suite of command line tools called Entrez Direct also known as E-utilities to access the metadata stored in its various databases. The three main tools of E-utilities are - esearch, esummary and xtract that lets you query any of the NCBI databases and extract the metadata associated with the query. The query can be anything(Bioproject, Biosample, SRA accession, Genbank assembly accession).
+
+Here is the command that we used to extract metadata information for the above mentioned research study.
+
+```
+esearch -db sra -query PRJNA252957 | esummary | xtract -pattern DocumentSummary -element Experiment@acc,Run@acc,Platform@instrument_model,Sample@acc > PRJNA252957-info.tsv
+```
+
+We can then use the IDs present in this file to download the genomes of interest using the ncbi tool fasterq-dump. 
+
+```
+cut -f2 PRJNA252957-info.tsv | parallel fasterq-dump {}
+```
+
+Once we have downloaded a large dataset, we want a way to quickly describe the genetic relationships. Below we will perform a fine-grained analysis of the relationship among our outbreak genomes, where accuracy of genetic distances is critical. However, for this sort of contextual anlaysis, we often prioritize the size of datasets and the speed of analysis, versus the accuracy. To get approximate genetic relationships among our downloaded and outbreak genoems we can use a tool called [mashtree](https://github.com/lskatz/mashtree).
+
+Mashtree creates a phylogenetic tree using the neighbor joining (NJ) algorithm. We can use the web tool [iTOL](https://itol.embl.de/) to visualize this tree, along with meta-data describing where each isolate came from (i.e. outbreak or public). You can see that all of our outbreak genomes group together on the tree, again providing strong support that all cases are linked by transmisison in the region.
 
 
 Identifying variants in outbreak genomes and constructing a phylogeny
