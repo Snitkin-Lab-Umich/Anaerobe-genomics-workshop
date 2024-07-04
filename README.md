@@ -91,9 +91,32 @@ Mashtree creates a phylogenetic tree using the neighbor joining (NJ) algorithm. 
 
 Identifying variants in outbreak genomes and constructing a phylogeny
 ---------------------------------------------------------------------
+One of the most common goals of in sequencing a microbial genome is to identify small genetic variants like nucleotide substitutions or small insertions/deletions (i.e. indels). Identifying these genetic variants in one or multiple genomes has several important downstream applications:
 
+1. Phylogenetic analysis - The first step in a phylogenetic analysis is identification of single nucleotide variants (SNVs) across the set of genomes of interest. Essentially, the input to any phylogenetic tree building software is a variant alignment that indicates what nucleotide each genome has at a position that is variable in at least one of the input genomes. The resulting phylogenetic tree then groups genomes together based on shared evolution, which is inferred from shared variants.
+
+2. Transmission analysis - One of the most common approaches to assess the confidence in a putative transmission linkage between two individuals is to count the number of variants between two individuals pathogen genomes. Thus, having accurate variants is essential to making correct transmission inferences.
+
+3. Functional analysis - In previous sessions we identified different types of genetic variation including differences in gene content and antibiotic resistance variation. Small changes in the genome like those identified through variant calling pipelines can also have significant functional impacts on genome function.
+
+A typical variant calling analysis involves:
+
+    **Read Mapping**: Mapping sequenced reads to the reference genome using a read mapper
+    **Variant calling**: Calling variants(differences) between the reference genome and our sample.
+    **Variant filtering**: Filtering out variant calls that are deemed low confidence based on user defined criteria.
+    **Variant annotation**: Annnotating these variants to learn about their their effect on proteins and other biological processes.
+
+There are many pipelines that stitch all of these steps together, with among the most popular due to its accuracy and ease of use being [snippy](https://github.com/tseemann/snippy). Using the output of snippy you can:
+
+1. Perform a phylogenetic analysis by feeding directly into a tool like [gubbins](https://github.com/nickjcroucher/gubbins). Gubbins performs recombination masking (i.e. identifies and masks putative horizontally acquired variants) and then performs maximum likelihood phylogenetic analysis.
+
+2. View read alignments and variant calls using a graphical tool like [IGV](https://igv.org/).
+   
+3. Examine annotations of variants using functional annotation provided by snippy 
 
 Overlaying meta-data on your whole-genome phylogeny to understand outbreak
 --------------------------------------------------------------------------
+
+
 
 
