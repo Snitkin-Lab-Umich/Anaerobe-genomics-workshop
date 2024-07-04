@@ -32,19 +32,19 @@ A critical first step upon receiving your data is to make sure it is of sufficie
 
 There are different tools available to aid with these assessments that are standardly used in the field. 
 
-##Overall sequence quality assessment
+## Overall sequence quality assessment
 For evaluating the amount and quality of data, it is common to use a tool called [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/). FastQC takes as input the fastq files that comprise the millions of short (100-200bp) reads that are generated for each genome, and provides different assessments of sequence quality as well as provide evidence for contamination.
 
-##Read trimming
+## Read trimming
 Oftentimes your data is overall good quality, but there may be a few low quality sequences, or residual adpaptor sequence that needs to be trimmed off. For this reason, even if FastQC indicates your data is of good quality, you should run a tool called [trimmomatic](https://github.com/timflutre/trimmomatic). Trimmomatic will: i) trim off adaptor sequences, ii) remove low quality reads and iii) trim off low quality parts of otherwise high quality reads.
 
-##Genome assembly and assembly evaluation
+## Genome assembly and assembly evaluation
 After you have assessed the overall quality of your data and trimmed it, there are some additional tools to make sure you sequenced the right thing and that there is not any contamination that would cause problems in downstream analysis. To proceed with these assessments, a first step is to create a genome assembly. A genome assembler will take your short reads, and stitch them together to form larger contiguous sequences (i.e. contigs), which are suitable for downstream analyses of genome structure and function. The most common genome assembler for bacterial genomes is call Spades: here is a nice tool that makes it more user freindly called [Shovil](https://github.com/tseemann/shovill). After you construct an assembly, you should evaluate it's quality. Three things to pay attention to are the number of contigs, the overall size of the assembly and the typical size of contigs. A large number of contigs (i.e. > 500) is an indication of potential contamination. For the genome size, you should verify that it matches what is typical for the species you are intending to sequence. The typical size of contigs (i.e. N50) should be at least 20 Kb, as smaller than that is a sign of contamination. These assembly metrics can be generated with a tool called [quast](https://github.com/ablab/quast).
 
-##Species determination
+## Species determination
 Once you have a genome assembly, you can use a tool called [skanni](https://github.com/bluenote-1577/skani) to compare to a database of genomes to assess the most likely species.
 
-##Genome completeness
+## Genome completeness
 Lastly, you can use a tool called [CheckM](https://github.com/Ecogenomics/CheckM) to evaluate genome completeness. This tool works by verifying that your assembly has one and exactly one of known single copy genes. Not having all of these is a sign of insufficient sequencing, and having multiple copies is an indication of contamination.
 
 Typing genomes using multi-locus sequence typing (MLST)
