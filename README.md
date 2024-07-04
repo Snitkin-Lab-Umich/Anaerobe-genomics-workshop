@@ -57,7 +57,9 @@ Applying this tool to our CRKP outbreak genomes reveals that they are all ST 258
 
 Annotating antimicrobial resistance (AMR) genes and mutations with AMRfinderPlus
 --------------------------------------------------------------------------------
+When investigating bacterial pathogens it is often of interest to catalog antibiotic resistance and virulence factors present in genomes. A common tool to perform this task is [AMRfinderplus](https://github.com/ncbi/amr). AMR finder plus compares genes from your genome to a curated database of resistance/virulence genes, as well as resistance mutations for several epidemiologically important organisms.
 
+Applying AMRfinderplus to our outbreak genomes shows that they have many antibiotic resistance genes, as one might expect for a healthcare associated lineage like ST258. Of greatest interest is the presence of the _Klebsiella pneumoniae_ carbapenemase (KPC) enzyme, which confers carbapenem resistance and makes CRKP infections difficult to treat.
 
 Downloading public data to put local genomes in context
 -------------------------------------------------------
