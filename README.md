@@ -32,24 +32,28 @@ A critical first step upon receiving your data is to make sure it is of sufficie
 
 There are different tools available to aid with these assessments that are standardly used in the field. 
 
-### Overall sequence quality assessment
+#### Overall sequence quality assessment
 For evaluating the amount and quality of data, it is common to use a tool called [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/). FastQC takes as input the fastq files that comprise the millions of short (100-200bp) reads that are generated for each genome, and provides different assessments of sequence quality as well as provide evidence for contamination.
 
-### Read trimming
+#### Read trimming
 Oftentimes your data is overall good quality, but there may be a few low quality sequences, or residual adpaptor sequence that needs to be trimmed off. For this reason, even if FastQC indicates your data is of good quality, you should run a tool called [trimmomatic](https://github.com/timflutre/trimmomatic). Trimmomatic will: i) trim off adaptor sequences, ii) remove low quality reads and iii) trim off low quality parts of otherwise high quality reads.
 
-### Genome assembly and assembly evaluation
+#### Genome assembly and assembly evaluation
 After you have assessed the overall quality of your data and trimmed it, there are some additional tools to make sure you sequenced the right thing and that there is not any contamination that would cause problems in downstream analysis. To proceed with these assessments, a first step is to create a genome assembly. A genome assembler will take your short reads, and stitch them together to form larger contiguous sequences (i.e. contigs), which are suitable for downstream analyses of genome structure and function. The most common genome assembler for bacterial genomes is call Spades: here is a nice tool that makes it more user freindly called [Shovil](https://github.com/tseemann/shovill). After you construct an assembly, you should evaluate it's quality. Three things to pay attention to are the number of contigs, the overall size of the assembly and the typical size of contigs. A large number of contigs (i.e. > 500) is an indication of potential contamination. For the genome size, you should verify that it matches what is typical for the species you are intending to sequence. The typical size of contigs (i.e. N50) should be at least 20 Kb, as smaller than that is a sign of contamination. These assembly metrics can be generated with a tool called [quast](https://github.com/ablab/quast).
 
-### Species determination
+#### Species determination
 Once you have a genome assembly, you can use a tool called [skanni](https://github.com/bluenote-1577/skani) to compare to a database of genomes to assess the most likely species.
 
-### Genome completeness
+#### Genome completeness
 Lastly, you can use a tool called [CheckM](https://github.com/Ecogenomics/CheckM) to evaluate genome completeness. This tool works by verifying that your assembly has one and exactly one of known single copy genes. Not having all of these is a sign of insufficient sequencing, and having multiple copies is an indication of contamination.
 
 Typing genomes using multi-locus sequence typing (MLST)
 -------------------------------------------------------
+Before performing an in depth genomic analysis to characterize the relatedness among your isolate genomes, it is often helpful to perform a higher level assessment. In the context of molecular epidemiology, a common approach for characterizing and cataloging genetic diversity of a strain collection is multi-locus sequence typing (MLST). MLST works by determining the sequence of a predetermined set of 6-7 conserved genes, and assigning a type based on the sequence of these genes. In the context of an outbreak investigation, this can be an informative first step. If all of your isolates are part of a single outbreak, then you'd expect them to be all of the same ST. Similarly, if there are some isolates that are different from the dominant ST, then they are unlikely to be related by clonal transmission (i.e. not part of the outbreak). A second advantage of performing MLST as a first step, is it allows you to put your genomes into buckets for downstream high-resolution genomic anlayses, where you can identify genetic variation among groups of genomes that belong to the same ST, which is usually of primary interest.
 
+When sequencing the whole genome, you are also getting the sequence of the subset of MLST genes, allowing you to infer ST from genomic data. A common tool for extracting MLST from genomes is called [mlst](https://github.com/tseemann/mlst).
+
+Applying this tool to our CRKP outbreak genomes reveals that they are all ST 258, which is the most common strain of CRKP in the United States. This supports the regional isolates indeed being linked by transmission.
 
 Annotating antimicrobial resistance (AMR) genes and mutations with AMRfinderPlus
 --------------------------------------------------------------------------------
