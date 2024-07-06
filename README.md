@@ -101,10 +101,10 @@ One of the most common goals of in sequencing a microbial genome is to identify 
 
 A typical variant calling analysis involves:
 
-    **Read Mapping**: Mapping sequenced reads to the reference genome using a read mapper
-    **Variant calling**: Calling variants(differences) between the reference genome and our sample.
-    **Variant filtering**: Filtering out variant calls that are deemed low confidence based on user defined criteria.
-    **Variant annotation**: Annnotating these variants to learn about their their effect on proteins and other biological processes.
+**Read Mapping**: Mapping sequenced reads to the reference genome using a read mapper
+**Variant calling**: Calling variants(differences) between the reference genome and our sample.
+**Variant filtering**: Filtering out variant calls that are deemed low confidence based on user defined criteria.
+**Variant annotation**: Annnotating these variants to learn about their their effect on proteins and other biological processes.
 
 There are many pipelines that stitch all of these steps together, with among the most popular due to its accuracy and ease of use being [snippy](https://github.com/tseemann/snippy). Using the output of snippy you can:
 
