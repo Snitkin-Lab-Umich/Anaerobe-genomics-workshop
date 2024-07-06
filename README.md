@@ -61,6 +61,8 @@ When investigating bacterial pathogens it is often of interest to catalog antibi
 
 Applying AMRfinderplus to our outbreak genomes shows that they have many antibiotic resistance genes, as one might expect for a healthcare associated lineage like ST258. Of greatest interest is the presence of the _Klebsiella pneumoniae_ carbapenemase (KPC) enzyme, which confers carbapenem resistance and makes CRKP infections difficult to treat.
 
+In addition to annotating AMR and virulence determinents, a standard part of any genomics pipeline is to perform broader genome annotation (i.e. detect all putative genes encoded in a genome). The most commonly used tool for this is [Prokka](https://github.com/tseemann/prokka), which will detect protein coding and RNA genes, and then compare predicted genes to databases of known genes to assign putative functions.
+
 Downloading public data to put local genomes in context
 -------------------------------------------------------
 Oftentimes it useful to put genomes that you have sequenced in the context of publically available isolates. Example analyses of interest include:
