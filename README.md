@@ -121,6 +121,51 @@ There are many pipelines that stitch all of these steps together, with among the
 
 Overlaying meta-data on your whole-genome phylogeny to understand outbreak
 --------------------------------------------------------------------------
+Having generated a phylogeny from genomic variants, we next will visualize it with labels for the facility from which isolates came from. We could do this in iTOL, but instead I will show you how this can be done in R, which enables more customizable, reproducible and quicker analysis.
+
+
+First let's plot a bar plot to see how many isolates we have from each facility.
+```
+#Load libraries
+library(ape)
+library(ggplot2)
+library(ggtree)
+
+#Read in meta-data
+meta_data <- read.table('assignment_3/crkp_outbreak_metadata.txt',
+                        sep = "\t",
+                        header = T)
+
+#Read in tree
+tree <- read.tree('assignment_3/crkp_gubbins.tree')
+
+#Read in variant alignment
+aln <- read.dna('assignment_3/crkp_gubbins_var_aln.fasta',
+                format = "fasta")
+
+
+#Plot distribution of isolates across facilities
+ggplot(data=meta_data, aes(x=Isolation_Source)) +
+  geom_bar(stat="count") + 
+  theme(axis.text.x = element_text(angle = 90))
+```
+
+Next let's use [ggtree](https://yulab-smu.top/treedata-book/) to plot the phylogeny with facility tip labels.
+
+```
+#Get isolates named by facility
+facils <- structure(meta_data$Isolation_Source, names = meta_data$Run)
+
+#Get vector of facilities for tips and nodes of tree
+facils_tip <- c(facils[tree$tip.label], 
+                rep(NA, Nnode(tree)))
+
+#Plot tree with ggtree
+ggtree(tree) + 
+  geom_tippoint(aes(col = facils_tip)) + 
+  scale_color_discrete() +
+  labs(col = 'Facility')
+```
 
 
 
